@@ -1,0 +1,41 @@
+# listener.ora
+# Configuration settings for the Oracle Listener
+
+SID_LIST_LISTENER =
+  (SID_LIST =
+    (SID_DESC =
+      (GLOBAL_DBNAME = primarydb_DGMGRL)
+      (ORACLE_HOME = /u01/app/oracle/product/19.0.0/dbhome_1)
+      (SID_NAME = primarydb)
+    )
+    (SID_DESC =
+      (GLOBAL_DBNAME = standbydb_DGMGRL)
+      (ORACLE_HOME = /u01/app/oracle/product/19.0.0/dbhome_1)
+      (SID_NAME = standbydb)
+    )
+  )
+
+LISTENER =
+  (DESCRIPTION_LIST =
+    (DESCRIPTION =
+      (ADDRESS = (PROTOCOL = TCP)(HOST = your_primary_host)(PORT = 1521))
+    )
+    (DESCRIPTION =
+      (ADDRESS = (PROTOCOL = TCP)(HOST = your_standby_host)(PORT = 1521))
+    )
+  )
+
+# Enable Secure Sockets Layer (SSL) configuration (optional)
+# Uncomment and configure the following section if SSL is required
+# SSL_LISTENER =
+#   (DESCRIPTION_LIST =
+#     (DESCRIPTION =
+#       (ADDRESS = (PROTOCOL = TCPS)(HOST = your_primary_host)(PORT = 2484))
+#     )
+#   )
+
+# Configure tracing and logging (optional)
+TRACE_LEVEL_LISTENER = OFF
+LOGGING_LISTENER = ON
+LOG_DIRECTORY_LISTENER = /u01/app/oracle/diag/tnslsnr/primary_host/listener
+LOG_FILE_LISTENER = listener.log
