@@ -1,0 +1,52 @@
+# standby_init.ora
+# Initialization parameters for the standby database
+
+# Basic database configuration
+db_name=primarydb
+db_unique_name=standbydb
+control_files='/u01/app/oracle/oradata/standbydb/control01.ctl','/u01/app/oracle/fast_recovery_area/standbydb/control02.ctl'
+db_block_size=8192
+compatible='19.0.0'
+
+# Archive log configuration
+log_archive_format='%t_%s_%r.dbf'
+log_archive_dest_1='LOCATION=/archivelogs/ VALID_FOR=(ALL_LOGFILES,ALL_ROLES) DB_UNIQUE_NAME=standbydb'
+log_archive_dest_2='SERVICE=primarydb LGWR ASYNC VALID_FOR=(ONLINE_LOGFILES,PRIMARY_ROLE) DB_UNIQUE_NAME=primarydb'
+log_archive_dest_state_1=ENABLE
+log_archive_dest_state_2=ENABLE
+
+# Redo transport and protection modes
+remote_login_passwordfile='EXCLUSIVE'
+log_archive_config='DG_CONFIG=(primarydb,standbydb)'
+log_archive_max_processes=4
+log_archive_min_succeed_dest=1
+
+# Standby database management
+standby_file_management=AUTO
+
+# TDE (Transparent Data Encryption) configuration (if used)
+# encryption_wallet_location=(SOURCE=(METHOD=FILE)(METHOD_DATA=(DIRECTORY=/u01/app/oracle/admin/standbydb/wallet)))
+# sqlnet.encryption_server = required
+# sqlnet.encryption_types_server = (AES256)
+# sqlnet.crypto_checksum_server = required
+# sqlnet.crypto_checksum_types_server = (SHA256)
+
+# Flashback database configuration
+db_flashback_retention_target=1440
+db_recovery_file_dest='/u01/app/oracle/fast_recovery_area'
+db_recovery_file_dest_size=50G
+
+# Memory and performance tuning
+memory_target=2G
+memory_max_target=2G
+pga_aggregate_target=512M
+sga_target=1G
+
+# Diagnostic and logging configuration
+audit_file_dest='/u01/app/oracle/admin/standbydb/adump'
+audit_trail='DB'
+diagnostic_dest='/u01/app/oracle'
+
+# Miscellaneous parameters
+processes=300
+open_cursors=300
