@@ -1,0 +1,39 @@
+# tnsnames.ora
+# Network service names configuration for Oracle Data Guard
+
+# Primary database service
+primarydb =
+  (DESCRIPTION =
+    (ADDRESS = (PROTOCOL = TCP)(HOST = your_primary_host)(PORT = 1521))
+    (CONNECT_DATA =
+      (SERVICE_NAME = primarydb_DGMGRL)
+    )
+  )
+
+# Standby database service
+standbydb =
+  (DESCRIPTION =
+    (ADDRESS = (PROTOCOL = TCP)(HOST = your_standby_host)(PORT = 1521))
+    (CONNECT_DATA =
+      (SERVICE_NAME = standbydb_DGMGRL)
+    )
+  )
+
+# Data Guard Broker configuration (optional)
+primarydb_DGB =
+  (DESCRIPTION =
+    (ADDRESS = (PROTOCOL = TCP)(HOST = your_primary_host)(PORT = 1521))
+    (CONNECT_DATA =
+      (SERVICE_NAME = primarydb_DGMGRL)
+      (INSTANCE_NAME = primarydb)
+    )
+  )
+
+standbydb_DGB =
+  (DESCRIPTION =
+    (ADDRESS = (PROTOCOL = TCP)(HOST = your_standby_host)(PORT = 1521))
+    (CONNECT_DATA =
+      (SERVICE_NAME = standbydb_DGMGRL)
+      (INSTANCE_NAME = standbydb)
+    )
+  )
